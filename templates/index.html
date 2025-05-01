@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TikTok Growth Hacker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center px-4">
+
+    <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl text-center space-y-6">
+        <!-- Title -->
+        <h1 class="text-2xl font-bold select-none pointer-events-none">Upload Your TikTok</h1>
+
+        <!-- Upload Form -->
+        <form method="POST" enctype="multipart/form-data" class="space-y-6 flex flex-col items-center">
+
+            <!-- File Upload Button -->
+            <label for="video-upload"
+                class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-full cursor-pointer hover:bg-blue-700 transition
+                focus:outline-none focus:ring-0 select-none text-center">
+                Choose File
+            </label>
+
+            <!-- Hidden Native File Input -->
+            <input id="video-upload" type="file" name="video" accept="video/mp4" required
+                class="hidden absolute w-0 h-0 opacity-0 pointer-events-none" />
+
+            <!-- File Name Display -->
+            <p id="file-name" class="text-sm text-gray-600 text-center select-none pointer-events-none">No file chosen</p>
+
+            <!-- Analyze Button -->
+            <button id="analyze-btn" type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition flex items-center justify-center space-x-2
+                focus:outline-none focus:ring-0 select-none"
+                tabindex="0">
+                <svg id="spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+                <span id="analyze-text">Analyze</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.getElementById('video-upload');
+            const fileNameDisplay = document.getElementById('file-name');
+            const form = document.querySelector('form');
+            const analyzeBtn = document.getElementById('analyze-btn');
+            const analyzeText = document.getElementById('analyze-text');
+            const spinner = document.getElementById('spinner');
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length > 0) {
+                    fileNameDisplay.textContent = fileInput.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
+
+            form.addEventListener('submit', () => {
+                analyzeBtn.disabled = true;
+                analyzeText.textContent = 'Analyzing...';
+                spinner.classList.remove('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>
